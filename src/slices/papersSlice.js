@@ -19,7 +19,13 @@ const materials = [
 export const papersSlice = createSlice({
     name: "papers",
     initialState: materials,
+    reducers: {
+        addpapers: (state, action) => {
+            state.push(action.payload);
+        }
+    }
 })
 
-// export reducer
+export const { addpapers } = papersSlice.actions;
+
 export default papersSlice.reducer;

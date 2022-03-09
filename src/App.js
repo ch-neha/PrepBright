@@ -4,6 +4,8 @@ import Home from './pages/Home';
 import Subject from './pages/Subject';
 import Resource from './pages/Resource';
 import Material from './pages/Material';
+import ResourceForm from './Components/ResourceForm';
+import SubjectForm from './Components/SubjectForm';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path='subjects' element={<Subject />} />
         <Route path='resource' element={<Resource />} />
         <Route path='subjects/resources' element={<Material />} />
+        <Route path='addresource' element={<ResourceForm />} />
+        <Route path='addsub' element={<SubjectForm />} />
       </Routes>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Material() {
     const location = useLocation();
@@ -17,7 +18,7 @@ function Material() {
 
     const pdf = materials.filter(function (ele) {
         return ele.subject === sub
-    })
+    });
 
     return (
         <div className="container">
@@ -39,7 +40,7 @@ function Material() {
                                         sequi magni odit sapiente autem ea doloremque natus
                                         aliquid dolor cupiditate inventore corrupti nam?</p>
                                     <a href={ele.link} target="_blank">
-                                        <button type="button" className="btn btn-danger float-end w-25">Open</button>
+                                        <button type="button" className="btn btn-secondary float-end w-25">Open</button>
                                     </a>
                                 </div>
                             </div>
@@ -47,7 +48,15 @@ function Material() {
                     </div>
                 )
             }
-        </div>
+            <Link to="/addresource">
+                <div className='float-end'>
+                    <button type="button" className='btn btn-danger p-3' style={{ position: "fixed", bottom: 40, right: 40, }}>
+                        Add New Resource
+                    </button>
+                </div>
+
+            </Link >
+        </div >
     );
 }
 
