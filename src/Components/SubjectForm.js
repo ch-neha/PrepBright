@@ -1,36 +1,46 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { addSubject } from "../slices/subjectSlice";
-import { Link } from 'react-router-dom';
+import { useState } from "react";
 
-export default function SubjectForm() {
+export default function SubjectForm(props) {
     let { register, handleSubmit, formState: { errors } } = useForm();
 
-    let subjs = useSelector(state => state.subs)
+    let [subadd, change] = useState(false);
 
     const dispatch = useDispatch();
 
     const onFormSubmit = (formObject) => {
-        let actionObj = addSubject(formObject);
-        console.log(actionObj);
+        let actionObj = addSubject(formObject.newsubject);
         dispatch(actionObj);
-        console.log(subjs)
+        change(true);
+    }
+
+    let handleFormSubmit = () => {
+        props.toggleSubmit(false);
     }
 
     return (
-        <div className="mx-auto w-50">
+        <div className="w-100">
             <p className='display-3 text-center text-primary mb-5'>Add Subject</p>
-            <form className="w-75 mx-auto" onSubmit={handleSubmit(onFormSubmit)}>
+            <form className="w-50 mx-auto" onSubmit={handleSubmit(onFormSubmit)}>
                 <div className="my-3">
                     <label htmlFor="subject">Subject Name </label>
-                    <input type="text" id="subject" className='form-control' {...register("subject")}></input>
+                    <input type="text" id="subject" className='form-control' {...register("newsubject")}></input>
                 </div>
                 <div className="mx-auto">
-                    {/* <Link to="/subjects"> */}
                     <button type="submit" className="btn btn-danger">Add</button>
-                    {/* </Link> */}
                 </div>
             </form>
+            {
+                subadd == true && <p className="w-25 text-info text-center mx-auto my-2">Subject Added!</p>
+            }
+            {
+                props.addSubjectForm == true &&
+                <div className="mx-auto w-25 my-5 text-center" >
+                    <button className="btn btn-success " type="button" onClick={handleFormSubmit}>Go Back</button>
+                </div>
+            }
         </div>
     );
 }

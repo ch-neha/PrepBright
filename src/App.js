@@ -14,11 +14,13 @@ function App() {
       <Routes>
         {/* Route for home component */}
         <Route path='' element={<Home />} />
-        <Route path='subjects' element={<Subject />} />
+        <Route path='subjects' element={<Subject />} >
+          <Route path='addsub' element={<SubjectForm />} />
+        </Route>
         <Route path='resource' element={<Resource />} />
         <Route path='subjects/resources' element={<Material />} />
         <Route path='addresource' element={<ResourceForm />} />
-        <Route path='addsub' element={<SubjectForm />} />
+
       </Routes>
     </div>
   );
