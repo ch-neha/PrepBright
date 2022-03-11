@@ -24,6 +24,10 @@ function Material() {
         <div className="container">
             <div className="display-5 text-center text-primary m-3 p-2 shadow-lg">{sub} {type}</div>
             {
+                pdf.length == 0 && <p className='display-4 text-info text-center'>No Resources Available</p>
+            }
+
+            {
                 pdf.map((ele) =>
                     <div className="card mt-5 mb-3 shadow">
                         <div className="card-body">

@@ -23,6 +23,7 @@ export default function ResourceForm() {
     }
 
     const onFormSubmit = (resourceObj) => {
+
         resourceObj.subject = selectedSubj;
         let actionObj;
         if (resourceObj.type === "papers") {
@@ -40,6 +41,7 @@ export default function ResourceForm() {
         dispatch(actionObj);
         console.log(actionObj);
         change(true);
+        document.getElementById("resourceform").reset();
     }
 
 
@@ -47,7 +49,7 @@ export default function ResourceForm() {
     return (
         <div className='shadow-lg w-75 mx-auto m-4 p-5 bg-light'>
             <p className='display-3 text-center text-primary mb-5'>Add Resource Form</p>
-            <form className="w-75 mx-auto" onSubmit={handleSubmit(onFormSubmit)}>
+            <form className="w-75 mx-auto" id='resourceform' onSubmit={handleSubmit(onFormSubmit)}>
                 <div className="mb-3 form-group" >
                     <label for="subj">Select Subject</label>
                     <select id="subj" className="form-control" {...register("subject")} onChange={setSubject}>
@@ -94,15 +96,19 @@ export default function ResourceForm() {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="subtitle">Resource Sub-Title: </label>
-                    <input type="text" id="subtitle" className='form-control' {...register("sub-title")}></input>
+                    <input type="text" id="subtitle" className='form-control' {...register("subtitle", { required: true, minLength: 3 })}></input>
+                    {errors.subtitle?.type === 'required' && <p className='text-danger'>*Please enter the title</p>}
+                    {errors.subtitle?.type === 'minLength' && <p className='text-danger'>*Title minimum length is 3</p>}
                 </div>
                 <div className="mb-3">
                     <label htmlFor="reslink">Resource Link: </label>
-                    <input type="text" id="reslink" className='form-control' {...register("link")}></input>
+                    <input type="text" id="reslink" className='form-control' {...register("link", { required: true })}></input>
+                    {errors.link?.type === 'required' && <p className='text-danger'>*Please enter the resource link</p>}
                 </div>
                 <div className="mb-3">
                     <label htmlFor="img">Resource Image: </label>
-                    <input type="text" id="img" className='form-control' {...register("imgurl")}></input>
+                    <input type="text" id="img" className='form-control' {...register("imgurl", { required: true })}></input>
+                    {errors.imgurl?.type === 'required' && <p className='text-danger'>*Please enter the image url</p>}
                 </div>
                 <div className='text-center'>
 
@@ -110,7 +116,6 @@ export default function ResourceForm() {
 
                 </div>
             </form>
-
             {
                 resadd == true && <p className="w-25 text-info text-center mx-auto my-2">Resource Added!</p>
             }

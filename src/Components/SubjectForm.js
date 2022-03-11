@@ -14,6 +14,7 @@ export default function SubjectForm(props) {
         let actionObj = addSubject(formObject.newsubject);
         dispatch(actionObj);
         change(true);
+        document.getElementById("subjectform").reset();
     }
 
     let handleFormSubmit = () => {
@@ -23,7 +24,7 @@ export default function SubjectForm(props) {
     return (
         <div className="w-100">
             <p className='display-3 text-center text-primary mb-5'>Add Subject</p>
-            <form className="w-50 mx-auto" onSubmit={handleSubmit(onFormSubmit)}>
+            <form className="w-50 mx-auto" id="subjectform" onSubmit={handleSubmit(onFormSubmit)}>
                 <div className="my-3">
                     <label htmlFor="subject">Subject Name </label>
                     <input type="text" id="subject" className='form-control' {...register("newsubject")}></input>
