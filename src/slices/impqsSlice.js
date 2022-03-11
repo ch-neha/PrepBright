@@ -19,7 +19,13 @@ const materials = [
 export const impqsSlice = createSlice({
     name: "important questions",
     initialState: materials,
+    reducers: {
+        addimpqs: (state, action) => {
+            state.push(action.payload);
+        }
+    }
 })
 
-// export reducer
+export const { addimpqs } = impqsSlice.actions;
+
 export default impqsSlice.reducer;

@@ -19,7 +19,13 @@ const materials = [
 export const ytSlice = createSlice({
     name: "videos",
     initialState: materials,
+    reducers: {
+        addvideos: (state, action) => {
+            state.push(action.payload);
+        }
+    }
 })
 
-// export reducer
+export const { addvideos } = ytSlice.actions;
+
 export default ytSlice.reducer;

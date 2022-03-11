@@ -19,7 +19,13 @@ const materials = [
 export const pdfSlice = createSlice({
     name: "pdfs",
     initialState: materials,
+    reducers: {
+        addpdfs: (state, action) => {
+            state.push(action.payload);
+        }
+    }
 })
 
-// export reducer
+export const { addpdfs } = pdfSlice.actions;
+
 export default pdfSlice.reducer;
