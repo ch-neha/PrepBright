@@ -1,34 +1,49 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { getResources } from '../slices/resourcesSlice';
 
 function Material() {
+    // get the subject and type of resource selected by the user
     const location = useLocation();
     const sub = location.state.from.subject;
     const type = location.state.from.type;
-    const materials = useSelector(state => {
-        if (type === "pdfs")
-            return state.pdfs
-        else if (type === "videos")
-            return state.videos
-        else if (type === "impqs")
-            return state.impqs
-        return state.papers
-    });;
+    
+    let dispatch = useDispatch();
 
-    const pdf = materials.filter(function (ele) {
-        return ele.subject === sub
-    });
+    useEffect(async () => {
+        let actionobj = await getResources("http://localhost:5000/resource/getresource");
+        dispatch(actionobj);
+    }, [])
 
+    let {resources, isPending, isError, isSuccess, errMsg} = useSelector(state => state.resources)
+
+    let resource, items;
+    
+    if(isSuccess == true) {
+        resource = resources.payload.filter(function (ele) {
+            return ele.subject === sub && ele.type === type
+        })
+        items = resource.length;
+        console.log(resource);
+    }
+   
     return (
         <div className="container">
             <div className="display-5 text-center text-primary m-3 p-2 shadow-lg">{sub} {type}</div>
+            
             {
-                pdf.length == 0 && <p className='display-4 text-info text-center'>No Resources Available</p>
+                items == 0 && <p className='display-4 text-info text-center'>No Resources Available</p>
             }
 
             {
-                pdf.map((ele) =>
+                isPending == true && <p className='display-4 text-info text-center'>Resources are loading</p>
+            }
+
+            {
+                isSuccess == true &&
+                resource.map((ele) =>
                     <div className="card mt-5 mb-3 shadow">
                         <div className="card-body">
                             <div className="row">
@@ -52,6 +67,7 @@ function Material() {
                     </div>
                 )
             }
+
             <Link to="/addresource">
                 <div className='float-end'>
                     <button type="button" className='btn btn-danger p-3' style={{ position: "fixed", bottom: 40, right: 40, }}>

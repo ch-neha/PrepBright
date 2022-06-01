@@ -1,21 +1,16 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom'
-import { addpapers } from '../slices/papersSlice';
-import { addimpqs } from '../slices/impqsSlice';
-import { addpdfs } from '../slices/pdfSlice';
-import { addvideos } from '../slices/ytSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function ResourceForm() {
-    let { register, handleSubmit, formState: { errors } } = useForm()
-
-    let dispatch = useDispatch();
+    let { register, handleSubmit, formState: { errors } } = useForm();
 
     let [resadd, change] = useState(false);
 
-    const subjs = useSelector(state => state.subs);
+    let {subjects, isPending, isSuccess, isError, errMsg} = useSelector(state => state.subjects);
     const [selectedSubj, changeSelected] = useState("empty");
 
     let setSubject = (event) => {
@@ -25,26 +20,22 @@ export default function ResourceForm() {
     const onFormSubmit = (resourceObj) => {
 
         resourceObj.subject = selectedSubj;
-        let actionObj;
-        if (resourceObj.type === "papers") {
-            actionObj = addpapers(resourceObj);
-        }
-        else if (resourceObj.type === "impqs") {
-            actionObj = addimpqs(resourceObj);
-        }
-        else if (resourceObj.type === "pdfs") {
-            actionObj = addpdfs(resourceObj);
-        }
-        else {
-            actionObj = addvideos(resourceObj);
-        }
-        dispatch(actionObj);
-        console.log(actionObj);
+
+        axios.post("http://localhost:5000/resource/createresource", resourceObj)
+        .then(responce => {
+            if(responce.data === 'success') {
+                alert('resource added');
+            }
+            else
+                alert(responce.data.message);
+            
+        })
+        .catch(error => alert('something went wrong'));
+
         change(true);
         document.getElementById("resourceform").reset();
+        
     }
-
-
 
     return (
         <div className='shadow-lg w-75 mx-auto m-4 p-5 bg-light'>
@@ -55,7 +46,7 @@ export default function ResourceForm() {
                     <select id="subj" className="form-control" {...register("subject")} onChange={setSubject}>
                         <option selected>Choose Subject</option>
                         {
-                            subjs.map((ele) => <option  >{ele}</option>)
+                            subjects.payload.map((ele) => <option  >{ele.name}</option>)
                         }
                     </select>
                 </div>
