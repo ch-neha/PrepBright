@@ -10,13 +10,15 @@ const path = require('path');
 // connect build of react app with nodejs, join mtd joines the current file with build folder 
 app.use(exp.static(path.join(__dirname,'./build')))
 
+
 app.use(exp.json());
+require("dotenv").config();
 
 const subjectApp = require("./apis/subjectApi");
 const resourceApp = require("./apis/resourceApi");
 
 // db connection url
-const dburl = "mongodb+srv://neha:neha@cluster0.osbgk.mongodb.net/?retryWrites=true&w=majority";
+const dburl = process.env.DBURL;
 
 // connect with mongodb server
 mclient.connect(dburl)
