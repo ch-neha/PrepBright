@@ -1,21 +1,14 @@
-import { useDispatch, useSelector } from "react-redux";
 import { useForm } from 'react-hook-form';
-import { addSubject } from "../slices/subjectSlice";
 import { useState } from "react";
-import { addSubj } from "../slices/subjectSlice"
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
-export default function SubjectForm(props) {
+export default function SubjectForm() {
     let { register, handleSubmit, formState: { errors } } = useForm();
 
     let [subadd, change] = useState(false);
 
-    // const dispatch = useDispatch();
-
     const onFormSubmit = (formObject) => {
-        // let actionObj = addSubject(formObject.newsubject);
-        // dispatch(actionObj);
-        // dispatch(addSubj(actionObj));
         axios.post('http://localhost:5000/subject/createsubject', formObject)
         .then(response => {
             console.log(response);
@@ -29,12 +22,11 @@ export default function SubjectForm(props) {
         document.getElementById("subjectform").reset();
     }
 
-    let handleFormSubmit = () => {
-        props.toggleSubmit(false);
-    }
 
     return (
-        <div className="w-100">
+        <div className="container">
+            <div className="display-5 text-center text-primary m-3 p-2 shadow-lg bg-white">Subjects</div>
+
             <p className='display-3 text-center text-primary mb-5'>Add Subject</p>
             <form className="w-50 mx-auto" id="subjectform" onSubmit={handleSubmit(onFormSubmit)}>
                 <div className="my-3">
@@ -45,13 +37,16 @@ export default function SubjectForm(props) {
                     <button type="submit" className="btn btn-danger">Add</button>
                 </div>
             </form>
+
             {
                 subadd == true && <p className="w-25 text-info text-center mx-auto my-2">Subject Added!</p>
             }
+
             {
-                props.addSubjectForm == true &&
                 <div className="mx-auto w-25 my-5 text-center" >
-                    <button className="btn btn-success " type="button" onClick={handleFormSubmit}>Go Back</button>
+                    <Link to="/subjects">
+                        <button className="btn btn-success " type="button"> Go Back </button>
+                    </Link>
                 </div>
             }
         </div>

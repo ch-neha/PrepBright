@@ -50,7 +50,7 @@ export const subjectSlice = createSlice({
 })
 
 // get action creator functions
-export const { addSubject } = subjectSlice.actions;
+export const {} = subjectSlice.actions;
 
 // export reducer
 export default subjectSlice.reducer;

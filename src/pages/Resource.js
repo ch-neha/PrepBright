@@ -37,7 +37,7 @@ function Resource() {
                         <p>Check out some YouTube tutorials to learn better.</p>
                     </div>
                     <div className="card-footer">
-                        <Link to="/subjects/resources" style={{ textDecoration: "none" }} state={{ from: videoprop }}>
+                        <Link to="/resources" style={{ textDecoration: "none" }} state={{ from: videoprop }}>
                             <button type="button" className="btn btn-danger mx-auto w-100"
                             >Open</button>
                         </Link>
@@ -52,7 +52,7 @@ function Resource() {
                         <p>Check out written notes and ppts of lecturers.</p>
                     </div>
                     <div className="card-footer">
-                        <Link to="/subjects/resources" style={{ textDecoration: "none" }} state={{ from: pdfprop }}>
+                        <Link to="/resources" style={{ textDecoration: "none" }} state={{ from: pdfprop }}>
                             <button type="button" className="btn btn-info mx-auto w-100"
                             >Open</button>
                         </Link>
@@ -67,7 +67,7 @@ function Resource() {
                         <p>Check out important questions given by faculty for reference.</p>
                     </div>
                     <div className="card-footer m-1">
-                        <Link to="/subjects/resources" style={{ textDecoration: "none" }} state={{ from: impqsprop }}>
+                        <Link to="/resources" style={{ textDecoration: "none" }} state={{ from: impqsprop }}>
                             <button type="button"
                                 className="btn btn-secondary d-block w-100 mx-auto">Open</button>
                         </Link>
@@ -83,7 +83,7 @@ function Resource() {
                     </div>
                     <div className="card-footer">
                         <div>
-                            <Link to="/subjects/resources" style={{ textDecoration: "none" }} state={{ from: papersprop }}>
+                            <Link to="/resources" style={{ textDecoration: "none" }} state={{ from: papersprop }}>
                                 <button type="button" className="btn btn-warning d-block mx-auto w-100"
                                 >Open</button>
                             </Link>
